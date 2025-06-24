@@ -115,4 +115,11 @@ This project reflects both my programming skills in Python and my understanding 
 
 
 
+![Screenshot 2025-06-24 23 49 50](https://github.com/user-attachments/assets/6cfcbf67-c2d4-4816-be0f-3de6e9765813)
+![Screenshot 2025-06-24 23 50 17](https://github.com/user-attachments/assets/8a5f65d6-8a7c-49ec-864e-e7073118e810)
+
+
+
+
+
 
