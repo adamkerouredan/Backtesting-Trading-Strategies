@@ -1,109 +1,118 @@
 # Backtesting-Trading-Strategies
-## 🧠 Extended Description
+## Extended Description
 
-This project explores a simple yet pedagogical trading strategy based on technical indicators, implemented from scratch with a focus on readability, robustness, and replicability.
+This project explores a simple yet educational trading strategy based on technical indicators, implemented from scratch with an emphasis on clarity, robustness, and analytical soundness.
 
-### 🧩 Strategy Logic
+### Strategy Logic
 
-The core logic combines two technical components:
+The core logic combines two complementary technical indicators:
 
-1. **Exponential Moving Averages (EMA):**
-   - Two EMAs (fast and slow) are computed on the closing price.
-   - A **bullish signal** (buy) is triggered when the fast EMA crosses above the slow EMA.
-   - A **bearish signal** (sell) is triggered when the fast EMA crosses below the slow EMA.
+1. **Exponential Moving Averages (EMAs)**  
+   - A fast and a slow EMA are calculated on ETH/USDT hourly closing prices.
+   - A long signal is generated when the fast EMA crosses above the slow EMA.
+   - A short (or exit) signal is generated when the fast EMA crosses below the slow EMA.
 
-2. **Stochastic RSI:**
-   - Used to filter out overbought/sold conditions.
-   - A buy signal is only executed if StochRSI < 0.8.
-   - A sell signal is only executed if StochRSI > 0.2.
-   - This helps smooth the signals and reduces false entries during market noise.
+2. **Stochastic RSI Filter**  
+   - Used to avoid entries in overbought/oversold regions.
+   - Buy signals are only allowed when StochRSI < 0.8.
+   - Sell signals are only allowed when StochRSI > 0.2.
+
+This dual-layer approach reduces false signals and increases robustness.
 
 ---
 
-### 🔍 Parameter Optimization
+### Parameter Optimization
 
-A grid search is conducted on the two EMA lengths:
-- Short EMA from 25 to 50 (step 3)
-- Long EMA from short+2 to 70 (step 3)
+A grid search is conducted over the EMA parameter space:
 
-For each (short, long) pair:
-- The backtest is rerun.
+- Short EMA: from 25 to 50 (step = 3)
+- Long EMA: from short+2 to 70 (step = 3)
+
+For each (short, long) configuration:
+- A full backtest is executed.
 - Final portfolio value is recorded.
-- A heatmap is generated to visualize sensitivity.
+- Results are visualized via a 2D heatmap to assess sensitivity and robustness.
 
-This approach avoids brute-force overfitting while providing valuable intuition on parameter zones.
+Only EMAs are optimized — RSI parameters remain fixed to avoid excessive tuning or overfitting.
 
 ---
 
-### 💰 Backtest Mechanics
+### Backtest Mechanics
 
-- Initial balance: **$1000** in BUSD
-- Transaction fee: **0.07%** per trade
+- Initial capital: $1000
+- Execution fees: 0.07% per trade
+- 100% of available capital is used per trade
 - No leverage, no shorting
-- Position sizing: **100% capital per signal**
-- Wallet updates on every trade with fees deducted
-- Drawdown tracked continuously vs. last ATH
+- The wallet is updated at each trade (net of fees)
+- Maximum drawdown is tracked continuously from peak equity
 
-The backtest records every transaction with:
-- Date
+Each trade is recorded with:
+
+- Timestamp
 - Position (Buy/Sell)
 - Execution price
-- Fees
-- Cash and coin balance
-- Total wallet value
-- Drawback (relative to peak)
+- Fee paid
+- Asset and cash balances
+- Total portfolio value
+- Drawdown from last ATH
 
 ---
 
-### 📈 Performance Analysis
+### Performance Evaluation
 
-After backtest execution, the strategy outputs:
-- Final vs initial capital
-- Strategy performance vs passive Buy & Hold
-- Win/loss trade counts
-- Average return on winning and losing trades
-- Best/worst trades
+The following metrics are computed post-backtest:
+
+- Final wallet value vs initial capital
+- Strategy return vs passive Buy & Hold
+- Number of profitable and losing trades
+- Average gain and loss per trade (%)
 - Maximum drawdown
-- Total fees paid
+- Total transaction costs
+- Best and worst trade (in %)
 
-All trades are classified as:
-- **Good** (positive return)
-- **Bad** (negative return)
-
----
-
-### 📉 Visualization
-
-Two key plots are generated:
-1. **EMA parameter optimization heatmap**: Result vs (short, long) EMA pairs.
-2. **Portfolio evolution**: Wallet and ETH price over time, dual subplot.
-
-These visualizations help assess both model sensitivity and financial performance.
+Trades are classified as either:
+- **Good** (positive P&L)
+- **Bad** (negative P&L)
 
 ---
 
-### 📚 Learning Takeaways
+### Visual Output
 
-While the strategy is deliberately kept simple, building it exposed key quantitative finance concepts:
-- Indicator calibration
-- Overfitting vs generalization
-- Position sizing and fee impact
-- Trade classification logic
-- Realistic backtest constraints
+Two key charts are generated:
 
-It forms a solid foundation for more advanced work (e.g. regime switching, volatility filters, ML-based signal generators).
+1. **Parameter sensitivity heatmap** of final portfolio value over EMA pairs  
+2. **Dual plot** of price and wallet evolution over time
+
+These allow both qualitative and quantitative evaluation of the strategy’s performance and structural behavior.
 
 ---
 
-## 🔭 Possible Extensions
+### Learning Takeaways
 
-- Implement rolling-window walk-forward validation
-- Add Sharpe ratio and volatility-adjusted metrics
-- Explore regime-based strategies (trending vs ranging)
-- Apply to multi-asset portfolio (e.g. BTC/ETH/BUSD)
-- Integrate real-time streaming data via WebSockets
+Although deliberately simple, this strategy demonstrates key principles of systematic trading:
+
+- Signal generation using price-derived indicators
+- Use of filters to reduce overtrading
+- Robust backtesting with transaction costs
+- Parameter sensitivity and overfitting risk
+- Equity curve and drawdown tracking
+
+This framework is extendable and forms a clean foundation for further research.
 
 ---
 
-This project reflects both my technical skills in Python/data manipulation and my market intuition developed through hands-on strategy design and performance evaluation.
+### Possible Extensions
+
+- Add performance ratios (Sharpe, Sortino, Calmar)
+- Implement walk-forward or cross-validation
+- Introduce volatility filtering or trend regime detection
+- Extend to multi-asset backtesting
+- Deploy to real-time data pipeline for live signal generation
+
+---
+
+This project reflects both my programming skills in Python and my understanding of quantitative strategy design. It showcases my ability to structure a clean, testable, and interpretable trading model — aligned with front-office desk expectations.
+
+
+
 
